@@ -23,12 +23,9 @@ let turnoSchema = new Schema ({
         required: [true, 'El turno es necesario']
     },
     fecha:{
-        type:Date,
+        type: Date,
         required: [true, 'La fecha es necesaria'],
         default: Date.now
-    },
-    hora:{
-        type:Date,        
     },
     creador: {
         type: mongoose.Schema.Types.ObjectId,    

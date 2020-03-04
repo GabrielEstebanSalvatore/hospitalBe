@@ -12,9 +12,7 @@ class TurnoController {
             name: body.name,
             tipoTurno: body.tipoTurno,
             doctor: body.doctor,
-            fecha: body.fecha,
-            hora: body.hora
-    
+            fecha: body.fecha
         });
          
         await turno.save((err, turnoDB)=>{

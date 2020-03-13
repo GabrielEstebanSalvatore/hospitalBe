@@ -34,15 +34,36 @@ class TurnoController {
     
 
     static async ObtenerTurnos(req, res) {
-
-        try {
+        await Turno.find()
+            .exec((err, turnos) => {
+                if (err) {
+                    return res.status(400).json({
+                        ok: false,
+                        err
+                    });
+                }
+                Turno.count((err, conteo) => {
+                    if (err) {
+                        return res.status(400).json({
+                            ok: false,
+                            err
+                        });
+                    }
+                    res.json({
+                        ok: true,
+                        turnos,
+                        cuantos: conteo
+                    })
+                })
+            });
+        /*try {
             //sort cambia el orde de creación
             const turnos = await Turno.find({ creador: req.cliente.id }).sort({ creado: -1 });
             res.json({ turnos });
         } catch (error) {
             //console.log(error);
             res.status(500).send('Hubo un error');
-        }
+        }*/
     };   
 
     static async updateTurno(req, res){
@@ -82,7 +103,7 @@ class TurnoController {
     };
 
     static async eliminarTurno(req,res){
-        const id = req.params.id;
+        try {
 
         //revisar el ID 
         let turno = await Turno.findById(req.params.id);
@@ -93,25 +114,17 @@ class TurnoController {
         }
 
         // verificar el creador del turno
-        if(turno.creador.toString() !== req.cliente.id ) {
+        /*if(turno.creador.toString() !== req.cliente.id ) {
             return res.status(401).json({msg: 'No Autorizado'});
-        }
+        }*/
 
-        await Turno.findByIdAndDelete(id,(err,turnoDB)=>{
-            if (err){
-                return res.status(500).json({
-                   ok: false,
-                   err
-           })
-            }else {
-               res.status(200).json({
-                   ok: true,
-                   turno:{
-                        message: `El turno de ${turnoDB.name} fue eliminado`
-                   } 
-               })
-           }
-        })
+        await Turno.findOneAndRemove({ _id : req.params.id })
+        res.json({ msg: 'Turno eliminado '})
+           
+        } catch (error) {
+            console.log(error);
+            res.status(500).send('Error en el servidor')
+        }
     }
 
 }

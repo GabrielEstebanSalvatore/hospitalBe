@@ -4,6 +4,8 @@ const router = express.Router();
 const docContrller = require('../controllers/doctores');
 
 router.post('/doctores', async (req, res)=>{
+    console.log(req.body);
+    
     await docContrller.create(req,res);
     
 });

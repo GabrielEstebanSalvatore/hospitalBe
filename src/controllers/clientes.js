@@ -58,65 +58,6 @@ class clientController {
             console.log(error);
             res.status(400).send('Hubo un error');
         }
-
-
-
-
-
-
-        // let body = req.body;
-        
-        // let cliente = new Cliente({
-        //     name: body.name,
-        //     email: body.email,
-        //     password: body.password,
-        //     role: body.role,
-        //     cliente: body.cliente
-        // });
-
-        // const {password} = req.body;
-        // const salt = await bcryptjs.genSalt(10);
-        // cliente.password = await bcryptjs.hash(password, salt);
-
-        // try{
-        //      // Revisar que el usuario registrado sea unico
-        //     let cliente = await Cliente.findOne({ email });
-    
-        //     if(cliente) {
-        //         return res.status(400).json({ msg: 'El usuario ya existe' });
-        //     }
-
-        // }catch{
-        //     await cliente.save((err, clienteDB)=>{
-        //         if (err) {
-        //             return res.status(400).json({
-        //                 ok: false,
-        //                 err
-        //             })
-        //         } else {
-        //             res.status(201).json({
-        //                 ok: true,
-        //                 cliente: cliente.id
-        //             })
-
-        //             //Crear el Token
-        //             const payload = {
-        //                 cliente:{
-        //                     id:cliente.id
-        //                 }
-        //             }
-        //             jwt.sign(payload, process.env.SECRETA,{
-        //                 expiresIn:3600000
-        //             }, (error, token)=>{
-        //                 if (error ) throw error;
-        //                 res.json({token})
-        //             })
-        //         }
-        //     });
-        // }
-
-        
-
     };
 
     static async getAll(req, res) {

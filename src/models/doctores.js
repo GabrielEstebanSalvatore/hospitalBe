@@ -15,9 +15,17 @@ img: {
     type: String,
     required: false
 },
-profession: {
+profesion: {
     type: String,
     required: [true, 'La profesión es necesaria']
+},
+telefono: {
+    type: String,
+    required: [true, 'El teléfono es necesario']
+},
+direccion: {
+    type: String,
+    required: [true, 'La dirección es requerida']
 },
 estado: {
     type: Boolean,

@@ -27,6 +27,7 @@ let turnoSchema = new Schema ({
         required: [true, 'La fecha es necesaria'],
         default: Date.now
     },
+    user:{type:String},
     creador: {
         type: mongoose.Schema.Types.ObjectId,    
         ref: 'Cliente'

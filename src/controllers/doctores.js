@@ -4,14 +4,17 @@ const _ =require('underscore');
 class DocController {
 
     static async create(req , res){
+        console.log(req);
+        
     let body = req.body;
     let doctor = new Doctor({
         name: body.name,
+        profesion: body.profesion,
         email: body.email,
+        telefono: body.telefono,
+        direccion: body.direccion,
         img: body.img,
-        profession: body.profession
-
-     });
+    });
      
         await doctor.save((err, doctorDB)=>{
     

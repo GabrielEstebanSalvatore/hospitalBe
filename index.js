@@ -6,6 +6,12 @@ const mongoose = require('mongoose');
 const session = require('express-session');
 const path = require('path');
 
+//PDF
+const pdf = require('html-pdf');
+const pdfTemplate = require('./src/document');
+
+//EMAIL
+const nodemailer = require('nodemailer')
 //const methodOverride = require('method-override')
 
 //Initializations
@@ -32,11 +38,28 @@ app.use(cors());
 app.use(require('./src/routers/doctores'));
 app.use(require('./src/routers/turnos'));
 app.use(require('./src/routers/clientes'));
+
 app.use(require('./src/routers/auth'));
+
+app.use(require('./src/routers/correo'));
+
+//---------- PDF
+app.post('/create-pdf', (req, res) => {
+    pdf.create(pdfTemplate(req.body), {}).toFile('result.pdf', (err) => {
+        if(err) {
+            res.send(Promise.reject());
+        }
+
+        res.send(Promise.resolve());
+    });
+});
+
+app.get('/fetch-pdf', (req, res) => {
+    res.sendFile(`${__dirname}/result.pdf`)
+})
 
 //Static Files 
 app.use(express.static(path.join(__dirname, 'public')));
-
 
 //base de datos 
 mongoose.connect('mongodb://localhost:27017/hospital',{

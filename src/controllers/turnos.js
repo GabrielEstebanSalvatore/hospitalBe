@@ -1,18 +1,19 @@
 const Turno = require('../models/turnos');
 const _ =require('underscore');
-const { validationResult } = require('express-validator');
-
 
 class TurnoController {
 
     static async create(req , res){
+        console.log(req);
+        
 
         let body = req.body;
         let turno = new Turno({
             name: body.name,
             tipoTurno: body.tipoTurno,
             doctor: body.doctor,
-            fecha: body.fecha
+            fecha: body.fecha,
+            user: req.cliente.id
         });
          
         await turno.save((err, turnoDB)=>{
@@ -34,7 +35,7 @@ class TurnoController {
     
 
     static async ObtenerTurnos(req, res) {
-        await Turno.find()
+        await Turno.find({user: req.cliente.id})
             .exec((err, turnos) => {
                 if (err) {
                     return res.status(400).json({
@@ -68,24 +69,26 @@ class TurnoController {
 
     static async updateTurno(req, res){
 
-        
-        let id = req.params.id;
-        let body = _.pick(req.body, ['name','doctor','tipoTurno','fecha','hora', 'creador']);
+        console.log("body",req.body);
+        console.log("id",req.params);
+        //let id = req.params.id; / REVISAR POR QUÉ no LLEGA EL id POR params.id//
+        let id = req.body.id;
+        let body = _.pick(req.body, ['name','doctor','tipoTurno','fecha','hora',{/* 'creador'*/}]);
 
         // revisar el ID 
-        let turno = await Turno.findById(req.params.id);
-
+        let turno = await Turno.findById(id);
+        console.log("turno",turno);
         // verificar el creador del proyecto
-        if(turno.creador.toString() !== req.cliente.id ) {
+        /*if(turno.creador.toString() !== req.cliente.id ) {
             return res.status(401).json({msg: 'No Autorizado'});
-        }
+        }*/
 
         // si el proyecto existe o no
         if(!turno) {
             return res.status(404).json({msg: 'Proyecto no encontrado'})
         }
 
-        await Turno.findByIdAndUpdate(id,body,(err,turnoDB)=>{
+        await Turno.findOneAndUpdate(id,body,(err,turnoDB)=>{
             if (err){
                 return res.status(400).json({
                    ok: false,
@@ -130,27 +133,3 @@ class TurnoController {
 }
 
 module.exports = TurnoController;
-
-/*
-try {
-            // revisar el ID 
-            let turno = await Turno.findById(req.params.id);
-            const id = req.params.id;
-            // si el turno existe o no
-            if(!turno) {
-                return res.status(404).json({msg: 'turno no encontrado'})
-            }
-    
-            // verificar el creador del turno
-            if(turno.creador.toString() !== req.usuario.id ) {
-                return res.status(401).json({msg: 'No Autorizado'});
-            }
-    
-            // Eliminar el turno
-            await Turno.findByIdAndDelete({id});
-            res.json({ msg: 'Turno eliminado '})
-    
-        } catch (error) {
-            //onsole.log(error);
-            res.status(500).send('Error en el servidor')
-        }*/

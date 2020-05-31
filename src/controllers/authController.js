@@ -53,7 +53,15 @@ exports.autenticarCliente = async (req, res) => {
 exports.ClienteAutenticado = async (req, res) => {
     try {
         const cliente = await Cliente.findById(req.cliente.id).select('-password');
-        res.json({cliente});
+        //VERIFICO SI ES ADMIN O USER
+        if(cliente.role === "USER_ROLE"){
+
+            res.json({cliente});
+            
+        }else{
+            res.json({cliente, role:cliente.role});
+        }
+        
     } catch (error) {
         console.log(error);
         res.status(500).json({msg: 'Hubo un error'});

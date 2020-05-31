@@ -1,4 +1,4 @@
-module.exports = ({ name, doctor, tipoTurno, receiptId, fecha }) => {
+module.exports = ({ name, doctor, tipoTurno, key, fecha }) => {
     const today = new Date();
 return `
     <!doctype html>
@@ -103,7 +103,7 @@ return `
                                NOMBRE DE CLIENTE: ${name}
                             </td>
                             <td>
-                               NUMERO DE RECIBO: ${receiptId}
+                               NUMERO DE RECIBO: ${key}
                             </td>
                          </tr>
                       </table>

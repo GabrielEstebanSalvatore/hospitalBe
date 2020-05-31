@@ -23,6 +23,8 @@ router.get('/clientes/:id', async (req, res )=>{
     await clienteController.getOne(req, res);
 });
 router.put('/clientes/:id', async (req, res)=>{
+    console.log(req);
+    
     await clienteController.updateCliente(req,res);
 });
 

@@ -12,13 +12,18 @@ router.post('/turnos',
     ,
     async (req, res)=>{
     await TurnoController.create(req,res);
-    //console.log(req.body);    
+     
 });
 
 router.get('/turnos',
     auth, 
     async (req, res )=>{
     await TurnoController.ObtenerTurnos(req, res);
+});
+
+router.get('/turnosclientes',
+    async (req, res )=>{
+    await TurnoController.ObtenerTurnosClientes(req, res);
 });
 
 router.put('/turnos/:id', 

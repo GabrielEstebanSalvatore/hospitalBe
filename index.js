@@ -45,6 +45,8 @@ app.use(require('./src/routers/correo'));
 
 //---------- PDF
 app.post('/create-pdf', (req, res) => {
+    console.log(req.body, "create-pdf");
+    
     pdf.create(pdfTemplate(req.body), {}).toFile('result.pdf', (err) => {
         if(err) {
             res.send(Promise.reject());
@@ -52,6 +54,7 @@ app.post('/create-pdf', (req, res) => {
 
         res.send(Promise.resolve());
     });
+    
 });
 
 app.get('/fetch-pdf', (req, res) => {
@@ -62,7 +65,10 @@ app.get('/fetch-pdf', (req, res) => {
 app.use(express.static(path.join(__dirname, 'public')));
 
 //base de datos 
-mongoose.connect('mongodb://localhost:27017/hospital',{
+/*mongodb://localhost:27017/hospital*/
+
+mongoose.connect('mongodb+srv://kayak:<kNeEjJWXHU4H4uYD>@cluster0-4hz29.mongodb.net/hospital',{
+
     useCreateIndex: true,
     useNewUrlParser: true,
     useFindAndModify: false,

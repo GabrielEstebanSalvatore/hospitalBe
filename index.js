@@ -67,7 +67,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 //base de datos 
 /*mongodb://localhost:27017/hospital*/
 
-mongoose.connect('mongodb+srv://kayak:<kNeEjJWXHU4H4uYD>@cluster0-4hz29.mongodb.net/hospital',{
+mongoose.connect('mongodb+srv://kayak:<kNeEjJWXHU4H4uYD>@cluster0-4hz29.mongodb.net/test?retryWrites=true&w=majority',{
 
     useCreateIndex: true,
     useNewUrlParser: true,

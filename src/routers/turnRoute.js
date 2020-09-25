@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const auth = require('../middleware/auth');
 const { check } = require('express-validator');
-const TurnoController = require('../controllers/turnos');
+const TurnoController = require('../controllers/turnController');
 
 router.post('/turnos',
     auth ,
@@ -25,6 +25,20 @@ router.get('/turnosclientes',
     async (req, res )=>{
     await TurnoController.ObtenerTurnosClientes(req, res);
 });
+
+router.get('/turnosclientesadmin',
+    async (req, res )=>{
+    await TurnoController.ObtenerTurnosClientesAdmin(req, res);
+});
+
+router.get('/turnosparadoctores/:email',
+    auth, 
+    async (req, res )=>{
+        //console.log(req.params, req.body);
+        
+    await TurnoController.ObtenerTurnosDoctores(req, res);
+});
+
 
 router.put('/turnos/:id', 
     auth,

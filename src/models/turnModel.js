@@ -14,13 +14,19 @@ let turnoSchema = new Schema ({
     },
     doctor:{
         type: String,
-        required: [true, 'El nombre del doctor necesario']
+        default: '-',
+        //required: [true, 'El nombre del doctor necesario']
+    },
+    doctorEmail:{
+        type: String,
+        //default: '-',
+        //required: [true, 'El nombre del doctor necesario']
     },
     tipoTurno:{
         type: String,
         default: 'TURNO',
-        enum:turnosValidos,
-        required: [true, 'El turno es necesario']
+        //enum:turnosValidos,
+        //required: [true, 'El turno es necesario']
     },
     fecha:{
         type: Date,

@@ -1,15 +1,18 @@
-const Turno = require('../models/turnos');
+const Turno = require('../models/turnModel');
 const _ =require('underscore');
 
 class TurnoController {
 
     static async create(req , res){
        
+        //console.log(req.body);
+        
         let body = req.body;
         let turno = new Turno({
             name: body.name,
             tipoTurno: body.tipoTurno,
             doctor: body.doctor,
+            doctorEmail: body.doctorEmail,
             fecha: body.fecha,
             user: req.cliente.id
         });
@@ -31,9 +34,11 @@ class TurnoController {
          });
     };
     
-
-    static async ObtenerTurnos(req, res) {
-        await Turno.find({user: req.cliente.id})
+    static async ObtenerTurnosDoctores(req, res) {
+        
+      // let correo = 'gabrielestebansalvatore@gmail.com'	
+        await Turno.find({doctorEmail: req.params.email})
+        
             .exec((err, turnos) => {
                 if (err) {
                     return res.status(400).json({
@@ -41,7 +46,35 @@ class TurnoController {
                         err
                     });
                 }
-                Turno.count((err, conteo) => {
+                Turno.countDocuments((err, conteo) => {
+                    if (err) {
+                        return res.status(400).json({
+                            ok: false,
+                            err
+                        });
+                    }
+                    res.json({
+                        ok: true,
+                        turnos,
+                        cuantos: conteo
+                    })
+                })
+            });
+       
+    };   
+
+    static async ObtenerTurnos(req, res) {
+        
+        await Turno.find({user: req.cliente.id})
+        
+            .exec((err, turnos) => {
+                if (err) {
+                    return res.status(400).json({
+                        ok: false,
+                        err
+                    });
+                }
+                Turno.countDocuments((err, conteo) => {
                     if (err) {
                         return res.status(400).json({
                             ok: false,
@@ -66,6 +99,7 @@ class TurnoController {
     };   
 
     static async ObtenerTurnosClientes(req, res) {
+       
         await Turno.find()
             .exec((err, turnos) => {
                 if (err) {
@@ -74,7 +108,7 @@ class TurnoController {
                         err
                     });
                 }
-                Turno.count((err, conteo) => {
+                Turno.countDocuments((err, conteo) => {
                     if (err) {
                         return res.status(400).json({
                             ok: false,
@@ -97,11 +131,36 @@ class TurnoController {
             res.status(500).send('Hubo un error');
         }*/
     };   
+    static async ObtenerTurnosClientesAdmin(req, res) {
+        await Turno.find()
+            .exec((err, turnos) => {
+                if (err) {
+                    return res.status(400).json({
+                        ok: false,
+                        err
+                    });
+                }
+                Turno.countDocuments((err, conteo) => {
+                    if (err) {
+                        return res.status(400).json({
+                            ok: false,
+                            err
+                        });
+                    }
+                    res.json({
+                        ok: true,
+                        turnos,
+                        cuantos: conteo
+                    })
+                })
+            });
+    };   
+
 
     static async updateTurno(req, res){
 
-        console.log("body",req.body);
-        console.log("id",req.params);
+        //console.log("body",req.body);
+        //console.log("id",req.params);
         //let id = req.params.id; / REVISAR POR QUÉ no LLEGA EL id POR params.id//
         let id = req.body.id;
         let body = _.pick(req.body, ['name','doctor','tipoTurno','fecha','hora',{/* 'creador'*/}]);

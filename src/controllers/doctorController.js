@@ -1,4 +1,4 @@
-const Doctor = require('../models/doctores');
+const Doctor = require('../models/doctorModel');
 const _ =require('underscore');
 
 class DocController {
@@ -42,7 +42,7 @@ class DocController {
                         err
                     });
                 }
-                Doctor.count((err, conteo) => {
+                Doctor.countDocuments((err, conteo) => {
                     if (err) {
                         return res.status(400).json({
                             ok: false,

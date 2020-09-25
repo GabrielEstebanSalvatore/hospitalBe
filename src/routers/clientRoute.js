@@ -3,7 +3,7 @@ const router = express.Router();
 const { check } =require('express-validator')
 
 
-const clienteController = require('../controllers/clientes');
+const clienteController = require('../controllers/clientController');
 
 
 router.post('/clientes', 
@@ -23,7 +23,7 @@ router.get('/clientes/:id', async (req, res )=>{
     await clienteController.getOne(req, res);
 });
 router.put('/clientes/:id', async (req, res)=>{
-    console.log(req);
+    //console.log(req);
     
     await clienteController.updateCliente(req,res);
 });

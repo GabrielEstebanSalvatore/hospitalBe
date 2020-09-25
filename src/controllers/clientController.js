@@ -1,4 +1,4 @@
-const Cliente = require('../models/clientes');
+const Cliente = require('../models/clientModel');
 const _ =require('underscore');
 const bcryptjs = require('bcryptjs');
 const { validationResult} =require('express-validator');
@@ -6,7 +6,6 @@ const jwt = require('jsonwebtoken');
 
 class clientController {
 
-  
     static async create(req, res){
 
          // revisar si hay errores
@@ -15,7 +14,6 @@ class clientController {
             return res.status(400).json({errores: errores.array() })
         }
         
-
         const{email,password} = req.body;
 
         try {
@@ -53,7 +51,6 @@ class clientController {
                 res.json({ token  });
             });
     
-    
         } catch (error) {
             console.log(error);
             res.status(400).send('Hubo un error');
@@ -70,7 +67,7 @@ class clientController {
                         err
                     });
                 }
-                Cliente.count((err, conteo) => {
+                Cliente.countDocuments((err, conteo) => {
                     if (err) {
                         return res.status(400).json({
                             ok: false,

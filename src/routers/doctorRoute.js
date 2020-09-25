@@ -1,10 +1,10 @@
 const express = require('express');
 const router = express.Router();
 
-const docContrller = require('../controllers/doctores');
+const docContrller = require('../controllers/doctorController');
 
 router.post('/doctores', async (req, res)=>{
-    console.log(req.body);
+    //console.log(req.body);
     
     await docContrller.create(req,res);
     

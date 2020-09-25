@@ -4,7 +4,7 @@ const uniqueValidator = require('mongoose-unique-validator');
 //const bcrypt = require('bcryptjs');
 
 let rolesValidos ={
-    values:['ADMIN_ROLE', 'USER_ROLE'],
+    values:['ADMIN_ROLE', 'USER_ROLE','DOCTOR_ROLE'],
     message:'{VALUE} no es un rol válido'
 }
 

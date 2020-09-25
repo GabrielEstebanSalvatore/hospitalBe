@@ -5,7 +5,7 @@ const router = express.Router();
 
 
 router.post('/correo', (req, res) => {
-    console.log('entra', req);
+    //console.log('entra', req);
     
   const output = `
     <p>You have a new contact request</p>

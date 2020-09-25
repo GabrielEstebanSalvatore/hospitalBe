@@ -35,17 +35,17 @@ app.set('port', process.env.PORT || 4000);
 app.use(cors());
 
 //Routes
-app.use(require('./src/routers/doctores'));
-app.use(require('./src/routers/turnos'));
-app.use(require('./src/routers/clientes'));
+app.use(require('./src/routers/doctorRoute'));
+app.use(require('./src/routers/turnRoute'));
+app.use(require('./src/routers/clientRoute'));
 
-app.use(require('./src/routers/auth'));
+app.use(require('./src/routers/authRoute'));
 
-app.use(require('./src/routers/correo'));
+app.use(require('./src/routers/mailRoute'));
 
 //---------- PDF
 app.post('/create-pdf', (req, res) => {
-    console.log(req.body, "create-pdf");
+    //console.log(req.body, "create-pdf");
     
     pdf.create(pdfTemplate(req.body), {}).toFile('result.pdf', (err) => {
         if(err) {
@@ -66,8 +66,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 //base de datos 
 /*mongodb://localhost:27017/hospital*/
-
-mongoose.connect('mongodb+srv://kayak:kNeEjJWXHU4H4uYD@cluster0-4hz29.mongodb.net/test?retryWrites=true&w=majority',{
+//'mongodb+srv://kayak:kNeEjJWXHU4H4uYD@cluster0-4hz29.mongodb.net/test?retryWrites=true&w=majority'
+mongoose.connect('mongodb://localhost:27017/hospital',{
 
     useCreateIndex: true,
     useNewUrlParser: true,
